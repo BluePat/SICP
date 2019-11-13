@@ -2,7 +2,7 @@
 
 ## Computational processes manipulate data
 - Process is an abstraction. 
-	- Representing **active** manipulator.
+	- Representing an **active** manipulator.
 	- Descriptions of rules for manipulating data.
 - Data are abstraction as well. 
 	- Representing **passive** subject to manipulation
@@ -94,10 +94,10 @@ Each expression (with its subexpressions) can be represented as a tree.
 	- Combination is represented by a node. 
 	- Branches correspond to the operator and operands stemming from node.
 	- Leaves represents operators or values.
-	- Values of operands perlocate upwards (generel kind of process known as _tree accumulation_).
+	- Values of operands perlocate upwards (general process known as _tree accumulation_).
 
 **Primitive cases are taken care as follows:**
 1. the value sof primitive data are primitive data they name
 2. the value of operators are machine instruction sequences
 	- special case of _third rule_
-3. the value of other names are defined by name-object pairs in global environment.
+3. the value of names are defined by name-object pairs in global environment.
