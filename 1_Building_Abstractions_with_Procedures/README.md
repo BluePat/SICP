@@ -81,7 +81,7 @@ size
 
 Means of abstractions that are not combinations are called **special forms**. Special forms have their own evaluation rules (_associated evaluation rule_).
 
-**Complex programs are cunstructed by by building computational objects of increasing complexity.**
+**Complex programs are constructed by building computational objects of increasing complexity.**
 
 - **Global environment** - memory that keeps track of **name-object** pairs.
 
