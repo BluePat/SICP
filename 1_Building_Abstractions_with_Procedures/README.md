@@ -1,6 +1,6 @@
 # Building abstractions with procedures
 
-## Computational processes manipulate data.
+## Computational processes manipulate data
 - Process is an abstraction. 
 	- Representing **active** manipulator.
 	- Descriptions of rules for manipulating data.
