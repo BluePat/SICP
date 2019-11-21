@@ -101,3 +101,65 @@ Each expression (with its subexpressions) can be represented as a tree.
 2. the value of operators are machine instruction sequences
 	- special case of _third rule_
 3. the value of other names are defined by name-object pairs in global environment.
+
+## Compoud procedures
+
+- **procedure definition** is an abstraction technique by which compound operation can be named and referred to as a unit.
+
+```scheme
+; General form of procedure definition
+(define (_name_ _formal_parameters_) (_body_))
+
+; _name_: A symbol to be associated with procedure definition
+; _formal_parameters_: local names of corresponding arguments of the procedure.
+; _body_: An expression yielding a value for actual arguments supplied during application.
+```
+
+## The substitution model of procedural application
+
+- To apply compound procedure to arguments, evaluate the body of the procedure with each formal parameter replaced by corresponding argument.
+- Substitution model is framework to think about procedures. _It does not reflect how interpreter really works_.
+
+- **normal-order evaluation**:  Evaluation based on _full expansion of compound entities and successive reduction of primitive ones_.
+- **applicative-order evaluation**:  Evaluation based on _argument evaluation and immediate application_.
+
+Both the normal-order and applicative-order evaluation should yield same results.
+
+## Conditional expressions and predicates
+
+- **Case analysis** is a rule for defining outputs based on value of the input.
+- Lisp has a special form for notating _case analysis_
+
+```scheme
+; cond special form
+(cond (p1 e1) ; clauses - pairs of predicate and consequent expression
+      (p2 e2)
+           …
+      (pN eN))
+```
+
+- Conditional expressios are evaluated in top-down fashion.  If predicate in one of them is found to be true, the consequent expression is returned. _If none of them is found to be true the value of cond is undefined_.
+- Comparation operators are _primitive predicates_.
+- Predicate is a procedure that returns boolean.
+
+- There may be `else`  _special form_ used in conditional expressions, thus preventing **undefined value**.  
+```scheme
+(cond (p1 e1)
+           …
+      (pN eN)
+      (else eM))
+```
+
+- `if` special form may be used as well.  It follows tenary operator syntax:
+```scheme
+(if _predicate_ _consequent_ _alternative_) 
+```
+	- The diffrence between `cond` and `if` special forms is that a _predicate_ and a _consequent_ have to be single expresions for `if special form`. But sequence of special forms is allowed in `cond special form`. 
+
+There are **logical composition operations** :
+```scheme
+(and e1 e2 … eN)
+(or e1 e2 … eN)
+(not e)
+```
+	- `and` and `or` are in fact special forms not operators, becauce _not every logical expression need to be evaluated_.
