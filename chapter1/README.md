@@ -162,4 +162,131 @@ There are **logical composition operations** :
 (or e1 e2 … eN)
 (not e)
 ```
-	- `and` and `or` are in fact special forms not operators, becauce _not every logical expression need to be evaluated_.
+	- `and` and `or` are in fact special forms not operators, because _not every logical expression need to be evaluated_.
+
+## Procedures as Black-Box abstractions
+- Problem can be break into numbre of subproblems.
+- The supbroblem is represented by a procedure.
+
+A program may be viewed as **cluster of procedures** mirroring the _decomposition of the problem_.
+
+- Each procedure should accomplish _identifiable task_
+
+If a procedure is supposed to acomplish one well defined task. We may at the moment of use disregard its implementation. Thus using it as a black box.
+_Disregarding implementation details_ of procedure while using it is called **procedural abstraction**.
+
+```text
+A user should not need to know how the procedure is implemented in order to use it. 
+```
+
+Meaning of a procedure **is independent of the parameter names** used by author .
+	- Parameter names _must be local to the body of procedure_.
+
+Name of  a **formal parameter** is called **bound variable**
+	- The name itself doesn’t matter.
+	- Procedure definition _binds_ its formal parameters.
+	- Meaning of the procedure is unchanged if a bound variable is consistently renamed through the definition.
+
+Variable that is not bound is **free**.
+
+The set of expressions for which _a binding defines a name_ is a **scope of the name**. 
+	- Bound variables declared as formal parameters of the procedure have its body as their scope.
+
+Bound variables names should be distinct from names of _free variables_. The overlap might cause a bug by **capturing** free variable name, thus replacing its meaning from free to bound one. 
+
+```text
+Meaning of procedure is independent of the names of its bound variables. But is not idependent of the names of its free variables.
+```
+
+## Internal definitions and block structure
+- Procedures that are just implementation details and are not importatn to the user should not be placed into the top level namespace.
+- I is possible to have _internal definitions_ that are local to the procedure.
+- Nesting of denitions is called **block structure**
+- Block structure solves the simplest form of _name-packaging problem_
+
+Using _block structure_ also allow **lexical scoping**
+	- Disciplne of simplifying nested procedures by _using enclosing procedure’s bound variables_ as nested procedures’ _free variables_. 
+	- Free variables in a procedure are taken to refer to bindings made by enclosing procedure definitions.
+	- Thus effectively removing _formal parameters_ from inner function declerations.
+
+# Procedures and processes they generate
+- Procedure is a pattern for _the local evolution_ of a process.
+- Procedure specifies how each stage of process is built upon previous stage.
+- _global behavior_ of process is given by all _local evolutions_.
+
+## Linear recursion and iteration
+- Good practise is to use _substitution model_ to visualize procedures in action.
+
+Note: See `exrcises.scm` for several implementations of factorial.
+
+### Comparasion of recursion and linear iteration
+
+1. Recursion
+	-  Substitution model shows phases of _expansion_ and _contraction_.
+
+```scheme
+(factorial 6)
+(* 6 (factorial 5))
+(* 6 (* 5 (factorial 4)))
+(* 6 (* 5 (* 4 (factorial 3))))
+(* 6 (* 5 (* 4 (* 3 (factorial 2)))))
+(* 6 (* 5 (* 4 (* 3 (* 2 (factorial 1))))))
+(* 6 (* 5 (* 4 (* 3 (* 2 1)))))
+(* 6 (* 5 (* 4 (* 3 2))))
+(* 6 (* 5 (* 4 6)))
+(* 6 (* 5 24))
+(* 6 120)
+720
+```
+
+	- _expansion_ occurs as the process (sic!) builds up a  chain of **deferred operations**.
+	- _contraction_ occurs as the operations are actually performed by the process.
+
+```text
+Process characterized by a chain of deferred operation, hence by patterns of expansion and contractions, is called recusrsive process.
+```
+
+Carrying out _recursive process_ requires interpreter to keep track of operations to be performed latter.
+
+**The number of deferred operations grows lineary with n**
+
+With deffered operations, the amount of information the keep track of, as well as the number of steps, grows lineary as well.
+Such process is called **linear recursive process**.
+
+2. Iteration
+	- Substitution model shows no signs of expansion or contraction.
+
+```scheme
+(factorial 6)
+(iter 1 1 6)
+(iter 1 2 6)
+(iter 2 3 6)
+(iter 6 4 6)
+(iter 24 5 6)
+(iter 120 6 6)
+(iter 720 7 6)
+720 
+```
+
+	- at each step, only information needed are current values of bound variables.
+	- There is fixed number of so called _state variables_ that characterizes the process.
+	- There is a fixed rule describing how the _state variables_ should be updated with every iteration.
+
+```text
+Process whose state can be sumarized by fixed number of state variable and fixed rule governing update of their values is called linear iterative process.
+```
+
+If we stop the process before finishing, all we need to do to resume the _linear iterative process_ is to supply the values of state variables.
+To resume _linear recursive process_ we would need supply hidden information maintained by the interpreter and thus not contained in the program variables. Such information indicates **state of negotiating the chain of deferred operations**.
+
+Do not cofuse **recursive process** and **recursive procedure**.
+	- Recursive procedure refers to syntax (the procedure calls itself).
+	- Recusrsive process refers to _pattern of evolution of such process_, characterized by contraction and expansion.
+
+```text
+Recursive procedure does not force recursive evolution of a process it governs.
+```
+
+Iterative process can be executed **in constant space** even if it is describe by _recursive procedure_.  An implementation with this property is called **tail-recursive**.
+	- Some languages does not support tail-recursive implementation.
+	- With tail-recursive implementation iteration can be expressed using ordinary procedure mechanisms. And _special iteration constructs are useful only as syntactic sugar_.
