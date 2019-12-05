@@ -34,3 +34,43 @@
 
   (iter 1 1))
 
+; Fibonacci - linear recursive
+(define (fib1 n)
+  (cond ((= n 0) 0)
+        ((= n 1) 1)
+        (else (+ (fib1 (- n 1)) (fib1 (- n 2))))))
+
+; Fibonacci - tail recursive
+(define (fib2 n)
+
+  (define (iter x fib-one fib-two)
+    (if (= x 0)
+        fib-one
+        (iter (- x 1) fib-two (+ fib-one fib-two))))
+
+  (iter n 0 1))
+
+; Exercise 1.11 Write function f as recursive process
+(define (f n)
+  (if (< n 3)
+      n
+      (+ (f (- n 1)) 
+         (* 2 (f (- n 2))) 
+         (* 3 (f (- n 3))))))
+
+; Exercise 1.11 Write function f as iterative process
+(define (f-iter n)
+
+  ; acc1: Value of nth elem
+  (define (iter count acc1 acc2 acc3)
+    (if (= count 0)
+        acc1
+        (iter (- count 1)
+              acc2
+              acc3
+              (+ acc3 (* 2 acc2) (* 3 acc1)))))
+
+  ; For `n < 3` returns n
+  ; Starting values are zeroth (n=1), first (n=1) and second (n=2) elements. 
+  (iter n 0 1 2))
+

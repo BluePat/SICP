@@ -239,8 +239,10 @@ Note: See `exrcises.scm` for several implementations of factorial.
 720
 ```
 
+
 	- _expansion_ occurs as the process (sic!) builds up a  chain of **deferred operations**.
 	- _contraction_ occurs as the operations are actually performed by the process.
+
 
 ```text
 Process characterized by a chain of deferred operation, hence by patterns of expansion and contractions, is called recusrsive process.
@@ -268,9 +270,11 @@ Such process is called **linear recursive process**.
 720 
 ```
 
+
 	- at each step, only information needed are current values of bound variables.
 	- There is fixed number of so called _state variables_ that characterizes the process.
 	- There is a fixed rule describing how the _state variables_ should be updated with every iteration.
+
 
 ```text
 Process whose state can be sumarized by fixed number of state variable and fixed rule governing update of their values is called linear iterative process.
@@ -287,6 +291,6 @@ Do not cofuse **recursive process** and **recursive procedure**.
 Recursive procedure does not force recursive evolution of a process it governs.
 ```
 
-Iterative process can be executed **in constant space** even if it is describe by _recursive procedure_.  An implementation with this property is called **tail-recursive**.
-	- Some languages does not support tail-recursive implementation.
+Iterative process can be executed **in constant space** even if it is describe by _recursive procedure_.  An implementation with this property is called **tail-recursive**.  
+	- Some languages does not support tail-recursive implementation.  
 	- With tail-recursive implementation iteration can be expressed using ordinary procedure mechanisms. And _special iteration constructs are useful only as syntactic sugar_.
